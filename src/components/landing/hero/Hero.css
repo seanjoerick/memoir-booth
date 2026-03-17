@@ -1,0 +1,105 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  max-width: 560px;
+  width: 100%;
+}
+
+.hero__eyebrow {
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.hero__title {
+  font-size: var(--text-6xl);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-heading);
+}
+
+.hero__accent {
+  color: var(--color-accent);
+}
+
+.hero__sub {
+  font-size: var(--text-md);
+  color: var(--color-muted);
+  line-height: 1.7;
+  max-width: 420px;
+}
+
+.hero__angel {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.7;
+  max-width: 420px;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  color: #fff !important;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  padding: 0.8rem 2rem;
+  font-size: var(--text-base);
+  font-weight: 500;
+
+  background-image:
+    linear-gradient(var(--color-primary), var(--color-primary)),
+    conic-gradient(
+      from var(--angle, 0deg),
+      var(--color-accent) 0%,
+      transparent 50%
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+
+  animation: rotateBorder 2s linear infinite;
+  cursor: pointer;
+}
+
+.hero__btn:hover {
+  opacity: 0.9;
+}
+
+.hero__btn svg {
+  width: 1em;
+  height: 1em;
+}
+
+@keyframes rotateBorder {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
+
+.hero__sub span {
+  color: var(--color-accent);
+}
