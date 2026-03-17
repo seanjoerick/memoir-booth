@@ -19,9 +19,9 @@ function Hero() {
           forever
         </p>
         <button className="hero__btn" onClick={() => navigate(ROUTES.START)}>
-          start memoir <Camera />
+          Start memoir <Camera />
         </button>
-        <p className="hero__angel">
+        <p className="hero__eyebrow">
           made for my angel <span>♡</span>
         </p>
       </div>

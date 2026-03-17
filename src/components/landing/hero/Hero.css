@@ -4,7 +4,7 @@
   justify-content: center;
   padding: 2rem 1.5rem;
 
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   position: relative;
   z-index: 1;
   min-height: 100vh;
@@ -26,6 +26,10 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--color-muted);
+}
+
+.hero__eyebrow span {
+  color: var(--color-accent);
 }
 
 .hero__title {
@@ -105,9 +109,5 @@
 }
 
 .hero__sub span {
-  color: var(--color-accent);
-}
-
-.hero__angel span {
   color: var(--color-accent);
 }

@@ -1,8 +1,7 @@
 .testimonials {
-  padding: 2rem 1.5rem;
+  padding: 6rem 1.5rem;
   background-color: var(--color-bg);
   text-align: center;
-  border-bottom: 2px solid var(--color-border);
 }
 
 .testimonials__inner {
