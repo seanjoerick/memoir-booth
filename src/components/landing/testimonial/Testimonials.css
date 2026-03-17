@@ -1,0 +1,36 @@
+.testimonials {
+  padding: 2rem 1.5rem;
+  background-color: var(--color-bg);
+  text-align: center;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.testimonials__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.testimonials__eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+}
+
+.testimonials__heading {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-heading);
+  margin-bottom: 1rem;
+}
+
+.testimonials__sub {
+  font-size: 1rem;
+  color: var(--color-muted);
+  max-width: 500px;
+  margin: 0 auto 3rem auto;
+  line-height: 1.5;
+}

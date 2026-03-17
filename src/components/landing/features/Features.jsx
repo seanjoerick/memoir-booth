@@ -7,7 +7,8 @@ function Features() {
       <div className="features__inner">
         <p className="features__eyebrow">what you can do</p>
         <h2 className="features__heading">
-          everything you need for the perfect shoot
+          Everything you need for <br />
+          <span className="hero__accent">the perfect strip.</span>
         </h2>
         <div className="features__grid">
           {FEATURES.map((f, i) => (
