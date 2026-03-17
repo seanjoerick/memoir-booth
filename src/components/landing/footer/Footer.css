@@ -2,8 +2,6 @@
   padding: 3rem 1.5rem;
   border-top: 1px solid var(--color-border);
   margin-top: 4rem;
-  position: relative;
-  z-index: 10;
 }
 
 .footer__content {
