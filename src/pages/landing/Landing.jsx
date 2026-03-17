@@ -1,5 +1,6 @@
 import Hero from "@/components/landing/hero/Hero";
 import Particles from "@/components/common/particles/Particles";
+import Features from "@/components/landing/features/Features";
 import "./Landing.css";
 
 function Landing() {
@@ -8,7 +9,7 @@ function Landing() {
       <Particles
         particleColors={["#000000"]}
         particleCount={300}
-        particleSpread={10}
+        particleSpread={8}
         speed={0.1}
         particleBaseSize={100}
         moveParticlesOnHover={false}
@@ -17,6 +18,7 @@ function Landing() {
         pixelRatio={1}
       />
       <Hero />
+      <Features />
     </main>
   );
 }

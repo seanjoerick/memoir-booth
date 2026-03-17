@@ -106,3 +106,7 @@
 .hero__sub span {
   color: var(--color-accent);
 }
+
+.hero__angel span {
+  color: var(--color-accent);
+}

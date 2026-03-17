@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { LucideCamera } from "lucide-react";
+import { Camera } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
 import "./Hero.css";
@@ -10,7 +10,7 @@ function Hero() {
   return (
     <section className="hero">
       <div className="hero__inner">
-        <p className="hero__eyebrow">digital photobooth</p>
+        <p className="hero__eyebrow">Capture the Moment</p>
         <h1 className="hero__title">
           memoir<span className="hero__accent">Booth</span>
         </h1>
@@ -19,7 +19,7 @@ function Hero() {
           forever
         </p>
         <button className="hero__btn" onClick={() => navigate(ROUTES.START)}>
-          start memoir <LucideCamera />
+          start memoir <Camera />
         </button>
         <p className="hero__angel">
           made for my angel <span>♡</span>
