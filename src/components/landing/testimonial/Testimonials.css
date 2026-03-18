@@ -21,7 +21,7 @@
   font-size: clamp(1.5rem, 4vw, 2.25rem);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--color-heading);
+  color: var(--color-secondary);
   margin-bottom: 1rem;
 }
 
@@ -31,4 +31,72 @@
   max-width: 500px;
   margin: 0 auto 3rem auto;
   line-height: 1.5;
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.t-card {
+  padding: 2rem;
+  background: var(--color-heading);
+  border: 1px dashed var(--color-border);
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.t-icon {
+  color: var(--color-secondary);
+  margin-bottom: 1rem;
+}
+
+.t-card h3 {
+  font-size: 1.1rem;
+  color: var(--color-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.t-card p {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.beta-status {
+  margin-top: 4rem;
+  font-size: var(--text-xs);
+  color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0.7;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-online);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
 }

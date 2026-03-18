@@ -36,10 +36,12 @@
   --color-primary: #222222; /* buttons & main interactive */
   --color-primary-hover: #444444; /* button hover */
   --color-secondary: #f5f5f5; /* secondary section bg / cards */
-  --color-accent: #ff6b6b; /* call-to-action / highlights */
+  --color-accent: #e85d5d; /* call-to-action / highlights */
+  --color-accent-muted: #ff8a8a; /* muted accent / captions */
   --color-muted: #777777; /* muted text / captions */
   --color-border: #d1d5db; /* subtle borders */
   --color-ring: #3b82f6; /* focus ring / outline */
+  --color-online: #10b981; /* online status */
 }
 
 /* =========================================================
@@ -49,8 +51,8 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.6;
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--color-heading);
+  color: var(--color-bg);
 }
 
 /* Headings */

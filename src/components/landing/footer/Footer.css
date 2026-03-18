@@ -1,6 +1,6 @@
 .footer {
   padding: 3rem 1.5rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 0.5px solid var(--color-muted);
   margin-top: 4rem;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .footer__dev-link {
-  color: var(--color-heading);
+  color: var(--color-secondary);
   text-decoration: underline;
   font-weight: 400;
   transition: color 0.2s ease;
@@ -39,14 +39,13 @@
 .footer__version {
   font-size: 0.65rem;
   text-transform: uppercase;
-  color: var(--color-muted);
-  border: 1px solid var(--color-border);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
   padding: 1px 6px;
   border-radius: 4px;
   margin-left: 4px;
 }
 
-/* Social & Made-with Row */
 .footer__social-row {
   display: flex;
   align-items: center;
@@ -65,7 +64,7 @@
 }
 
 .footer__icon-link:hover {
-  color: var(--color-heading);
+  color: var(--color-accent);
 }
 
 .footer__divider {

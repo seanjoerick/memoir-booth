@@ -16,7 +16,6 @@ function Footer() {
             >
               Sean Macarayo
             </a>
-            <span className="footer__version">v1.0.0</span>
           </p>
         </div>
 

@@ -5,13 +5,13 @@ function MainLayout({ children }) {
   return (
     <div className="main-layout">
       <Particles
-        particleColors={["#000000"]}
+        particleColors={["#ffffff", "#ffffff", "#ffffff"]}
         particleCount={300}
         particleSpread={8}
-        speed={0.1}
+        speed={0.5}
         particleBaseSize={100}
+        particleSizeVariation={2}
         moveParticlesOnHover={false}
-        alphaParticles={false}
         disableRotation={false}
         pixelRatio={1}
       />
