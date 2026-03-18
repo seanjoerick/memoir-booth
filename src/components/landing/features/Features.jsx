@@ -1,5 +1,5 @@
 import "./Features.css";
-import FEATURES from "@/constants/index";
+import { FEATURES } from "@/constants/index";
 
 function Features() {
   return (

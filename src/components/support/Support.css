@@ -102,13 +102,21 @@
   color: var(--color-muted);
 }
 
-/* // ── Progress Bar ── */
-.progress-btn {
-  position: relative;
-  overflow: hidden;
+/* ── Loading ── */
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
 }
 
-.btn-text {
-  position: relative;
-  z-index: 1;
+.loading-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.progress-text {
+  width: 40px;
+  text-align: left;
 }

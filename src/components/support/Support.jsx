@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import { ROUTES } from "@/constants/routes";
 import Button from "@/components/common/Button/Button";
+import Spinner from "@/components/common/Spinner/Spinner";
 import Back from "@/components/common/Button/Back";
 import qrCode from "@/assets/images/my-qr-code.png";
 import "./Support.css";
@@ -20,8 +21,8 @@ function Support() {
         }
         return prev + 1;
       });
-    }, []);
-    // todo: 25 is the value of the animation duration
+    }, 25);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -67,7 +68,14 @@ function Support() {
             style={{ "--progress": `${progress}%` }}
           >
             <span className="btn-text">
-              {progress < 100 ? `Loading... ${progress}%` : "Choose layout →"}
+              {progress < 100 ? (
+                <span className="loading-state">
+                  <Spinner size={16} />
+                  <span className="progress-text">{progress}%</span>
+                </span>
+              ) : (
+                "Choose layout →"
+              )}
             </span>
           </Button>
         </div>
