@@ -1,7 +1,7 @@
 import Particles from "@/components/common/Particles/Particles";
 import "./Main.css";
 
-function MainLayout({ children }) {
+function Main({ children }) {
   return (
     <div className="main-layout">
       <Particles
@@ -20,4 +20,4 @@ function MainLayout({ children }) {
   );
 }
 
-export default MainLayout;
+export default Main;
