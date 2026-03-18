@@ -5,11 +5,20 @@ import Button from "@/components/common/Button/Button";
 import { Camera } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { LAYOUTS } from "@/constants/index";
+import { usePhoto } from "@/context/usePhoto";
 import "./Card.css";
 
 function CardLayout() {
+  const { setSelectedLayout } = usePhoto();
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
+
+  const handleConfirm = () => {
+    setSelectedLayout(selected);
+    console.log("Selected Layout:", selected);
+    navigate(ROUTES.CAPTURE);
+  };
+
   return (
     <>
       <div className="card-header">
@@ -19,12 +28,13 @@ function CardLayout() {
         </h2>
         <p className="card-desc">Pick how many poses you want in your card.</p>
       </div>
+
       <div className="card-grid">
         {LAYOUTS.map((layout) => (
           <div
             key={layout.id}
-            className={`card-item ${selected === layout.id ? "active" : ""}`}
-            onClick={() => setSelected(layout.id)}
+            className={`card-item ${selected?.id === layout.id ? "active" : ""}`}
+            onClick={() => setSelected(layout)}
           >
             <div className="card-preview">
               {Array.from({ length: layout.poses }).map((_, i) => (
@@ -36,10 +46,8 @@ function CardLayout() {
           </div>
         ))}
       </div>
-      <Button
-        onClick={() => selected && navigate(ROUTES.CAPTURE)}
-        disabled={!selected}
-      >
+
+      <Button onClick={handleConfirm} disabled={!selected}>
         Start Capture <Camera />
       </Button>
     </>

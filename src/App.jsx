@@ -7,19 +7,22 @@ import Card from "@/pages/card/Card";
 import Print from "@/pages/print/Print";
 import { ROUTES } from "@/constants/routes";
 import Main from "@/components/layout/Main";
+import { PhotoProvider } from "@/context/PhotoContext";
 
 function App() {
   return (
     <BrowserRouter>
-      <Main>
-        <Routes>
-          <Route path={ROUTES.LANDING} element={<Landing />} />
-          <Route path={ROUTES.START} element={<Start />} />
-          <Route path={ROUTES.CARD} element={<Card />} />
-          <Route path={ROUTES.CAPTURE} element={<Capture />} />
-          <Route path={ROUTES.PRINT} element={<Print />} />
-        </Routes>
-      </Main>
+      <PhotoProvider>
+        <Main>
+          <Routes>
+            <Route path={ROUTES.LANDING} element={<Landing />} />
+            <Route path={ROUTES.START} element={<Start />} />
+            <Route path={ROUTES.CARD} element={<Card />} />
+            <Route path={ROUTES.CAPTURE} element={<Capture />} />
+            <Route path={ROUTES.PRINT} element={<Print />} />
+          </Routes>
+        </Main>
+      </PhotoProvider>
     </BrowserRouter>
   );
 }
