@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Camera } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
+import Button from "@/components/common/Button/Button";
 import "./Hero.css";
 
 function Hero() {
@@ -18,9 +19,9 @@ function Hero() {
           snap, decorate & print adorable photo strips — keep the memories
           forever
         </p>
-        <button className="hero__btn" onClick={() => navigate(ROUTES.START)}>
+        <Button onClick={() => navigate(ROUTES.START)}>
           Start memoir <Camera />
-        </button>
+        </Button>
         <p className="hero__eyebrow">
           made for my angel <span>♡</span>
         </p>

@@ -1,4 +1,4 @@
-import Particles from "@/components/common/particles/Particles";
+import Particles from "@/components/common/Particles/Particles";
 import "./Main.css";
 
 function MainLayout({ children }) {

@@ -29,7 +29,7 @@ function Footer() {
             >
               <GithubIcon size={16} />
             </a>
-            <span className="footer__copy">© 2026 Memoir Booth</span>
+            <span className="footer__copy">© 2026 memoirBooth</span>
             <span className="footer__divider">•</span>
             <p className="footer__made-with">
               Built with <span>♡</span> for memories

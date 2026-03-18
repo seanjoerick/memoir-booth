@@ -1,0 +1,25 @@
+.back-button {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  color: var(--color-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  border: none;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.back-button:hover {
+  opacity: 0.5;
+}

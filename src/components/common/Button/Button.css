@@ -1,0 +1,51 @@
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  color: #fff !important;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  padding: 0.8rem 2rem;
+  font-size: var(--text-base);
+  font-weight: 500;
+  background: var(--color-heading);
+
+  background-image:
+    linear-gradient(var(--color-primary), var(--color-primary)),
+    conic-gradient(
+      from var(--angle, 0deg),
+      var(--color-accent) 0%,
+      transparent 50%
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+
+  animation: rotateBorder 2s linear infinite;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn svg {
+  width: 1em;
+  height: 1em;
+}
+
+@keyframes rotateBorder {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}

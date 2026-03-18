@@ -1,7 +1,10 @@
+import Support from "@/components/support/Support";
+import "./Start.css";
+
 function Start() {
   return (
-    <div>
-      <h1>Start Page</h1>
+    <div className="start">
+      <Support />
     </div>
   );
 }
