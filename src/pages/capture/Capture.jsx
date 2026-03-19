@@ -1,19 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import Webcam from "react-webcam";
 import { usePhoto } from "@/context/usePhoto";
 import "./Capture.css";
 
-import Viewfinder from "@/components/capture/Viewfinder";
 import PhotoSlots from "@/components/capture/PhotoSlots";
+import FilterOptions from "@/components/capture/FilterOptions";
+import { getFilterStyle } from "@/helper/filterHelpers";
 import CaptureControls from "@/components/capture/CaptureControls";
 import TIMER_OPTIONS from "./Timer";
 
 function Capture() {
   const { selectedLayout } = usePhoto();
 
-  const videoRef = useRef(null);
+  const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const intervalRef = useRef(null);
   const isPausedRef = useRef(false);
+  const takePhotoRef = useRef(null);
 
   const [photos, setPhotos] = useState([]);
   const [countdown, setCountdown] = useState(null);
@@ -22,55 +25,76 @@ function Capture() {
   const [cameraReady, setCameraReady] = useState(false);
   const [selectedTimer, setSelectedTimer] = useState(3);
   const [facingMode, setFacingMode] = useState("user");
+  const [isAutoRunning, setIsAutoRunning] = useState(false);
+  const [filters, setFilters] = useState({
+    brightness: 100,
+    contrast: 100,
+    saturate: 100,
+    sepia: 0,
+  });
 
   const totalPoses = selectedLayout?.poses ?? 4;
 
-  // Start camera
-  useEffect(() => {
-    const videoElement = videoRef.current;
+  const takePhoto = useCallback(() => {
+    if (!webcamRef.current || !canvasRef.current) return;
 
-    async function startCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode },
-        });
+    const imageSrc = webcamRef.current.getScreenshot();
+    if (!imageSrc) return;
 
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          setCameraReady(true);
-        }
-      } catch (err) {
-        console.error("Camera error:", err);
-      }
-    }
+    const img = new Image();
+    img.onload = () => {
+      const canvas = canvasRef.current;
+      canvas.width = img.width;
+      canvas.height = img.height;
 
-    startCamera();
+      const ctx = canvas.getContext("2d");
+      ctx.filter = getFilterStyle(filters);
+      ctx.drawImage(img, 0, 0);
 
-    return () => {
-      if (videoElement?.srcObject) {
-        videoElement.srcObject.getTracks().forEach((t) => t.stop());
-      }
+      const dataUrl = canvas.toDataURL("image/png");
+
+      setFlash(true);
+      setTimeout(() => setFlash(false), 300);
+
+      setPhotos((prev) => [...prev, dataUrl]);
     };
-  }, [facingMode]);
+    img.src = imageSrc;
+  }, [filters]);
 
-  // Take photo
-  const takePhoto = () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    if (!video || !canvas) return;
+  useEffect(() => {
+    takePhotoRef.current = takePhoto;
+  }, [takePhoto]);
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+  // Auto mode
+  useEffect(() => {
+    if (
+      selectedTimer !== "auto" ||
+      !isAutoRunning ||
+      isCounting ||
+      !cameraReady
+    )
+      return;
+    if (photos.length >= totalPoses) return;
 
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0);
+    const timeout = setTimeout(() => {
+      startCountdown(3, takePhotoRef.current);
+    }, 500);
 
-    const dataUrl = canvas.toDataURL("image/png");
+    return () => clearTimeout(timeout);
+  }, [
+    selectedTimer,
+    isAutoRunning,
+    photos.length,
+    isCounting,
+    cameraReady,
+    totalPoses,
+  ]);
 
-    setFlash(true);
-    setTimeout(() => setFlash(false), 300);
-
-    setPhotos((prev) => [...prev, dataUrl]);
+  // Manual capture
+  const handleCapture = () => {
+    if (isCounting || photos.length >= totalPoses || !cameraReady) return;
+    if (selectedTimer === "auto") return;
+    startCountdown(selectedTimer, takePhoto);
   };
 
   // Countdown
@@ -95,27 +119,6 @@ function Capture() {
     }, 1000);
   };
 
-  // Auto mode
-  useEffect(() => {
-    if (selectedTimer !== "auto" || isCounting || !cameraReady) return;
-    if (photos.length >= totalPoses) return;
-    if (isPausedRef.current) return;
-
-    const timeout = setTimeout(() => {
-      startCountdown(3, takePhoto);
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [selectedTimer, photos, isCounting, cameraReady, totalPoses]);
-
-  // Manual capture
-  const handleCapture = () => {
-    if (isCounting || photos.length >= totalPoses || !cameraReady) return;
-    if (selectedTimer === "auto") return;
-
-    startCountdown(selectedTimer, takePhoto);
-  };
-
   // Switch camera
   const switchCamera = () => {
     setFacingMode((prev) => (prev === "user" ? "environment" : "user"));
@@ -126,11 +129,37 @@ function Capture() {
 
   return (
     <div className="capture">
-      {/* Viewfinder */}
-      <Viewfinder videoRef={videoRef} countdown={countdown} flash={flash} />
+      <div className="capture-viewfinder">
+        {flash && <div className="capture-flash" />}
+
+        <Webcam
+          ref={webcamRef}
+          audio={false}
+          screenshotFormat="image/png"
+          mirrored={facingMode === "user"}
+          videoConstraints={{ facingMode }}
+          onUserMedia={() => setCameraReady(true)}
+          className="capture-video"
+          style={{ filter: getFilterStyle(filters) }}
+        />
+
+        {countdown !== null && (
+          <div className="capture-countdown">{countdown}</div>
+        )}
+
+        <div className="capture-corners">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
 
       {/* Hidden canvas */}
       <canvas ref={canvasRef} className="capture-canvas" />
+
+      {/* Filter Options */}
+      <FilterOptions filters={filters} setFilters={setFilters} />
 
       {/* Controls */}
       <CaptureControls
@@ -149,6 +178,8 @@ function Capture() {
         setIsCounting={setIsCounting}
         intervalRef={intervalRef}
         isPausedRef={isPausedRef}
+        isAutoRunning={isAutoRunning}
+        setIsAutoRunning={setIsAutoRunning}
       />
 
       {/* Photo previews */}

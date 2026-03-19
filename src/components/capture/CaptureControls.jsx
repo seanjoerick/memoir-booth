@@ -18,6 +18,8 @@ function CaptureControls({
   setIsCounting,
   intervalRef,
   isPausedRef,
+  isAutoRunning,
+  setIsAutoRunning,
 }) {
   return (
     <div className="capture-controls">
@@ -40,7 +42,10 @@ function CaptureControls({
         <TimerOptions
           options={TIMER_OPTIONS}
           selectedTimer={selectedTimer}
-          setSelectedTimer={setSelectedTimer}
+          setSelectedTimer={(val) => {
+            setSelectedTimer(val);
+            setIsAutoRunning(false);
+          }}
           disabled={isCounting || isDone}
         />
       </div>
@@ -48,9 +53,15 @@ function CaptureControls({
       {/* Capture Button */}
       <button
         className="capture-btn"
-        onPointerDown={handleCapture}
+        onPointerDown={() => {
+          if (selectedTimer === "auto") {
+            setIsAutoRunning((prev) => !prev);
+          } else {
+            handleCapture();
+          }
+        }}
         disabled={
-          isCounting || isDone || !cameraReady || selectedTimer === "auto"
+          isDone || !cameraReady || (selectedTimer !== "auto" && isCounting)
         }
       >
         <span className="capture-btn-inner" />
@@ -58,7 +69,11 @@ function CaptureControls({
 
       {/* Hint */}
       <p className="capture-hint">
-        {selectedTimer === "auto" ? "Auto capturing..." : "Press to capture"}
+        {selectedTimer === "auto"
+          ? isAutoRunning
+            ? "Tap to stop auto"
+            : "Tap to start auto"
+          : "Press to capture"}
       </p>
 
       {/* Retake */}
@@ -67,7 +82,9 @@ function CaptureControls({
           className="capture-retake-btn"
           onClick={() => {
             clearInterval(intervalRef.current);
-            isPausedRef.current = true;
+            intervalRef.current = null;
+            isPausedRef.current = false;
+            setIsAutoRunning(false);
             setCountdown(null);
             setIsCounting(false);
             setPhotos([]);
