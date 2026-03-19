@@ -9,6 +9,7 @@ import FilterOptions from "@/components/capture/FilterOptions";
 import { getFilterStyle } from "@/helper/filterHelpers";
 import CaptureControls from "@/components/capture/CaptureControls";
 import TIMER_OPTIONS from "./Timer";
+import Button from "@/components/common/Button/Button";
 
 function Capture() {
   const { selectedLayout, setPhotos: setContextPhotos } = usePhoto();
@@ -40,6 +41,7 @@ function Capture() {
     contrast: 100,
     saturate: 100,
     sepia: 0,
+    hueRottate: 0,
   });
 
   const totalPoses = selectedLayout?.poses ?? 4;
@@ -214,12 +216,12 @@ function Capture() {
 
       {/* Print button */}
       {isDone && (
-        <button
+        <Button
           className="capture-print-btn"
           onClick={() => navigate("/print")}
         >
           Proceed to Print →
-        </button>
+        </Button>
       )}
     </div>
   );

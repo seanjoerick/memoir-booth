@@ -9,8 +9,7 @@ function SwitchCameraButton({ onSwitch, disabled }) {
       disabled={disabled}
       title="Switch camera"
     >
-      Flip
-      <RefreshCcw size={16} />
+      <RefreshCcw size={26} />
     </button>
   );
 }

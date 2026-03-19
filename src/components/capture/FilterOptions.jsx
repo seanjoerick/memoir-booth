@@ -3,31 +3,103 @@ import React, { useState, useRef, useEffect } from "react";
 const FILTERS = [
   {
     name: "Normal",
-    values: { brightness: 100, contrast: 100, saturate: 100, sepia: 0 },
+    values: {
+      brightness: 100,
+      contrast: 100,
+      saturate: 100,
+      sepia: 0,
+      hueRotate: 0,
+    },
   },
   {
-    name: "Vintage",
-    values: { brightness: 90, contrast: 110, saturate: 80, sepia: 40 },
+    name: "Sunny Day",
+    values: {
+      brightness: 110,
+      contrast: 120,
+      saturate: 130,
+      sepia: 0,
+      hueRotate: 0,
+    },
   },
   {
-    name: "Grayscale",
-    values: { brightness: 100, contrast: 110, saturate: 0, sepia: 0 },
+    name: "Vintage Vibes",
+    values: {
+      brightness: 105,
+      contrast: 90,
+      saturate: 80,
+      sepia: 10,
+      hueRotate: 0,
+    },
   },
   {
-    name: "Green",
-    values: { brightness: 105, contrast: 105, saturate: 150, sepia: 0 },
+    name: "Bright & Fun",
+    values: {
+      brightness: 110,
+      contrast: 115,
+      saturate: 140,
+      sepia: 10,
+      hueRotate: -10,
+    },
   },
   {
-    name: "Warm",
-    values: { brightness: 110, contrast: 100, saturate: 120, sepia: 20 },
+    name: "Soft Glow",
+    values: {
+      brightness: 115,
+      contrast: 95,
+      saturate: 85,
+      sepia: 0,
+      hueRotate: 0,
+    },
   },
   {
-    name: "Cool",
-    values: { brightness: 100, contrast: 105, saturate: 90, sepia: 0 },
+    name: "Warm Hug",
+    values: {
+      brightness: 105,
+      contrast: 100,
+      saturate: 110,
+      sepia: 25,
+      hueRotate: -10,
+    },
   },
   {
-    name: "Faded",
-    values: { brightness: 115, contrast: 85, saturate: 70, sepia: 10 },
+    name: "Cool Breeze",
+    values: {
+      brightness: 100,
+      contrast: 110,
+      saturate: 90,
+      sepia: 0,
+      hueRotate: 180,
+    },
+  },
+  {
+    name: "Retro Fun",
+    values: {
+      brightness: 110,
+      contrast: 105,
+      saturate: 130,
+      sepia: 20,
+      hueRotate: 300,
+    },
+  },
+  {
+    name: "High Contrast",
+    values: {
+      brightness: 110,
+      contrast: 140,
+      saturate: 150,
+      sepia: 0,
+      hueRotate: 0,
+    },
+  },
+  {
+    name: "Black & White",
+    values: {
+      brightness: 100,
+      contrast: 120,
+      saturate: 0,
+      sepia: 0,
+      hueRotate: 0,
+    },
   },
 ];
 
