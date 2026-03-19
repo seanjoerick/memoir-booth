@@ -6,7 +6,6 @@ import Viewfinder from "@/components/capture/Viewfinder";
 import PhotoSlots from "@/components/capture/PhotoSlots";
 import CaptureControls from "@/components/capture/CaptureControls";
 import TIMER_OPTIONS from "./Timer";
-// import { getVideoFilter } from "@/components/helper/filterHelpers";
 
 function Capture() {
   const { selectedLayout } = usePhoto();
@@ -26,7 +25,7 @@ function Capture() {
 
   const totalPoses = selectedLayout?.poses ?? 4;
 
-  // 🎥 Start camera
+  // Start camera
   useEffect(() => {
     const videoElement = videoRef.current;
 
@@ -54,7 +53,7 @@ function Capture() {
     };
   }, [facingMode]);
 
-  // 📸 Take photo
+  // Take photo
   const takePhoto = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -74,7 +73,7 @@ function Capture() {
     setPhotos((prev) => [...prev, dataUrl]);
   };
 
-  // ⏱ Countdown
+  // Countdown
   const startCountdown = (duration, onDone) => {
     isPausedRef.current = false;
     setIsCounting(true);
@@ -96,7 +95,7 @@ function Capture() {
     }, 1000);
   };
 
-  // 🤖 Auto mode
+  // Auto mode
   useEffect(() => {
     if (selectedTimer !== "auto" || isCounting || !cameraReady) return;
     if (photos.length >= totalPoses) return;
