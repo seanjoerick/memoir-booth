@@ -11,9 +11,10 @@ function PhotoSlots({ photos, totalPoses, isDone }) {
         <div key={i} className={`capture-slot ${photos[i] ? "captured" : ""}`}>
           {photos[i] ? (
             <img
-              src={photos[i]}
+              src={photos[i].dataUrl}
               alt={`Pose ${i + 1}`}
               className="capture-slot-img"
+              style={{ filter: photos[i].filter }}
             />
           ) : (
             <span className="capture-slot-num">{i + 1}</span>

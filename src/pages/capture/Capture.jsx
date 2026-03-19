@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import { usePhoto } from "@/context/usePhoto";
 import "./Capture.css";
@@ -10,13 +11,21 @@ import CaptureControls from "@/components/capture/CaptureControls";
 import TIMER_OPTIONS from "./Timer";
 
 function Capture() {
-  const { selectedLayout } = usePhoto();
+  const { selectedLayout, setPhotos: setContextPhotos } = usePhoto();
+  const navigate = useNavigate();
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const intervalRef = useRef(null);
   const isPausedRef = useRef(false);
   const takePhotoRef = useRef(null);
+  const filtersRef = useRef({
+    brightness: 100,
+    contrast: 100,
+    saturate: 100,
+    sepia: 0,
+  });
+  const facingModeRef = useRef("user");
 
   const [photos, setPhotos] = useState([]);
   const [countdown, setCountdown] = useState(null);
@@ -35,35 +44,54 @@ function Capture() {
 
   const totalPoses = selectedLayout?.poses ?? 4;
 
+  const handleSetFilters = (val) => {
+    setFilters(val);
+    filtersRef.current = val;
+  };
+
   const takePhoto = useCallback(() => {
     if (!webcamRef.current || !canvasRef.current) return;
 
-    const imageSrc = webcamRef.current.getScreenshot();
-    if (!imageSrc) return;
+    const video = webcamRef.current.video;
+    if (!video || video.readyState !== 4) return;
 
-    const img = new Image();
-    img.onload = () => {
+    requestAnimationFrame(() => {
       const canvas = canvasRef.current;
-      canvas.width = img.width;
-      canvas.height = img.height;
+      if (!canvas) return;
+
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
       const ctx = canvas.getContext("2d");
-      ctx.filter = getFilterStyle(filters);
-      ctx.drawImage(img, 0, 0);
+
+      if (facingModeRef.current === "user") {
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+      }
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
 
       const dataUrl = canvas.toDataURL("image/png");
 
       setFlash(true);
       setTimeout(() => setFlash(false), 300);
-
-      setPhotos((prev) => [...prev, dataUrl]);
-    };
-    img.src = imageSrc;
-  }, [filters]);
+      setPhotos((prev) => [
+        ...prev,
+        { dataUrl, filter: getFilterStyle(filtersRef.current) },
+      ]);
+    });
+  }, []);
 
   useEffect(() => {
     takePhotoRef.current = takePhoto;
   }, [takePhoto]);
+
+  // i-sync sa context pag isDone
+  const isDone = photos.length >= totalPoses;
+  useEffect(() => {
+    if (isDone) setContextPhotos(photos);
+  }, [isDone, photos, setContextPhotos]);
 
   // Auto mode
   useEffect(() => {
@@ -121,11 +149,14 @@ function Capture() {
 
   // Switch camera
   const switchCamera = () => {
-    setFacingMode((prev) => (prev === "user" ? "environment" : "user"));
+    setFacingMode((prev) => {
+      const next = prev === "user" ? "environment" : "user";
+      facingModeRef.current = next;
+      return next;
+    });
   };
 
   const remaining = totalPoses - photos.length;
-  const isDone = photos.length >= totalPoses;
 
   return (
     <div className="capture">
@@ -155,13 +186,10 @@ function Capture() {
         </div>
       </div>
 
-      {/* Hidden canvas */}
       <canvas ref={canvasRef} className="capture-canvas" />
 
-      {/* Filter Options */}
-      <FilterOptions filters={filters} setFilters={setFilters} />
+      <FilterOptions setFilters={handleSetFilters} />
 
-      {/* Controls */}
       <CaptureControls
         isDone={isDone}
         isCounting={isCounting}
@@ -182,8 +210,17 @@ function Capture() {
         setIsAutoRunning={setIsAutoRunning}
       />
 
-      {/* Photo previews */}
       <PhotoSlots photos={photos} totalPoses={totalPoses} isDone={isDone} />
+
+      {/* Print button */}
+      {isDone && (
+        <button
+          className="capture-print-btn"
+          onClick={() => navigate("/print")}
+        >
+          Proceed to Print →
+        </button>
+      )}
     </div>
   );
 }
