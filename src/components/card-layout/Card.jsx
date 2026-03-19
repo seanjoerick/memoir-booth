@@ -15,7 +15,6 @@ function CardLayout() {
 
   const handleConfirm = () => {
     setSelectedLayout(selected);
-    console.log("Selected Layout:", selected);
     navigate(ROUTES.CAPTURE);
   };
 

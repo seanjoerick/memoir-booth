@@ -1,0 +1,358 @@
+.capture {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1.5rem 1rem;
+}
+
+/* ── Flash ── */
+.capture-flash {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  opacity: 0.85;
+  z-index: 999;
+  pointer-events: none;
+  animation: flash-out 0.3s ease forwards;
+}
+
+@keyframes flash-out {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ── Viewfinder ── */
+.capture-viewfinder {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #000;
+  flex-shrink: 0;
+}
+
+.capture-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  display: block;
+}
+
+.capture-canvas {
+  display: none;
+}
+
+/* ── Corner Brackets ── */
+.capture-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.capture-corners span {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--color-accent);
+  border-style: solid;
+  opacity: 0.7;
+}
+
+.capture-corners span:nth-child(1) {
+  top: 12px;
+  left: 12px;
+  border-width: 2px 0 0 2px;
+  border-radius: 3px 0 0 0;
+}
+.capture-corners span:nth-child(2) {
+  top: 12px;
+  right: 12px;
+  border-width: 2px 2px 0 0;
+  border-radius: 0 3px 0 0;
+}
+.capture-corners span:nth-child(3) {
+  bottom: 12px;
+  left: 12px;
+  border-width: 0 0 2px 2px;
+  border-radius: 0 0 0 3px;
+}
+.capture-corners span:nth-child(4) {
+  bottom: 12px;
+  right: 12px;
+  border-width: 0 2px 2px 0;
+  border-radius: 0 0 3px 0;
+}
+
+/* ── Countdown ── */
+.capture-countdown {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  animation: countdown-pop 0.4s ease;
+}
+
+@keyframes countdown-pop {
+  from {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ── Controls ── */
+.capture-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 560px;
+}
+
+/* ── Status ── */
+.capture-status {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* ── Timer Buttons ── */
+.capture-timers {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.capture-timer-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+  letter-spacing: 0.04em;
+}
+
+.capture-timer-btn:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--color-bg);
+}
+
+.capture-timer-btn.active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: rgba(232, 93, 93, 0.08);
+}
+
+.capture-timer-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.capture-switch-btn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+
+  background: transparent;
+  color: var(--color-muted);
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+
+  line-height: 1;
+
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.capture-switch-btn svg {
+  display: block;
+}
+
+.capture-switch-btn:hover:not(:disabled) {
+  color: var(--color-accent);
+}
+
+.capture-switch-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Shutter Button ── */
+.capture-btn {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    transform 0.15s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.capture-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+.capture-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.capture-btn-inner {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  display: block;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.capture-btn:hover:not(:disabled) .capture-btn-inner {
+  background: var(--color-accent);
+  transform: scale(0.95);
+}
+
+/* ── Hint ── */
+.capture-hint {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── Pose Slots ── */
+.capture-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.capture-slot {
+  width: 140px;
+  height: 105px;
+  border-radius: 8px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.capture-slot.current {
+  border-color: var(--color-accent);
+  border-style: solid;
+  box-shadow: 0 0 12px rgba(232, 93, 93, 0.25);
+}
+
+.capture-slot.captured {
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+}
+
+.capture-slot-num {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.capture-slot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+/* ── Retake Button ── */
+.capture-retake-btn {
+  padding: 0.4rem 1.25rem;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.capture-retake-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+@media (min-width: 800px) {
+  .capture {
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .capture-controls {
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .capture-slots {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .capture-slot {
+    width: 180px;
+    height: 135px;
+    border-radius: 12px;
+    border-width: 2px;
+    flex-shrink: 0;
+  }
+}
