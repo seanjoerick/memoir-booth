@@ -147,7 +147,7 @@
   border-radius: 999px;
   font-size: var(--text-md);
   font-weight: 600;
-  background: transparent;
+  background: var(--color-heading);
   color: var(--color-muted);
   cursor: pointer;
   transition:
@@ -165,11 +165,11 @@
 .capture-timer-btn.active {
   border-color: var(--color-accent);
   color: var(--color-accent);
-  background: rgba(232, 93, 93, 0.08);
+  background: var(--color-heading);
 }
 
 .capture-timer-btn:disabled {
-  opacity: 0.4;
+  background: var(--color-heading);
   cursor: not-allowed;
 }
 
@@ -207,52 +207,59 @@
 }
 
 .capture-switch-btn:disabled {
-  opacity: 0.4;
+  background: var(--color-heading);
   cursor: not-allowed;
 }
 
 /* ── Shutter Button ── */
 .capture-btn {
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  background: transparent;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  background: var(--color-heading);
+  backdrop-filter: blur(10px);
+
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+
   cursor: pointer;
-  transition:
-    border-color 0.2s ease,
-    transform 0.15s ease;
-  padding: 0;
-  flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
+/* Hover */
 .capture-btn:hover:not(:disabled) {
   border-color: var(--color-accent);
-  transform: scale(1.05);
+  background: var(--color-heading);
+  transform: translateY(-2px);
 }
 
+/* Active (click feel) */
+.capture-btn:active:not(:disabled) {
+  background: var(--color-heading);
+  transform: scale(0.96);
+}
+
+/* Disabled */
 .capture-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.capture-btn-inner {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--color-bg);
-  display: block;
-  transition:
-    background 0.2s ease,
-    transform 0.15s ease;
+.capture-btn svg {
+  color: white;
 }
 
-.capture-btn:hover:not(:disabled) .capture-btn-inner {
-  background: var(--color-accent);
-  transform: scale(0.95);
+.capture-btn:has(svg[data-stop]) {
+  color: red;
 }
 
 /* ── Hint ── */
@@ -316,7 +323,7 @@
   font-size: var(--text-xs);
   font-weight: 600;
   border: 1.5px solid rgba(255, 255, 255, 0.2);
-  background: transparent;
+  background: var(--color-heading);
   color: var(--color-muted);
   cursor: pointer;
   letter-spacing: 0.04em;
@@ -326,6 +333,7 @@
 }
 
 .capture-retake-btn:hover {
+  background: var(--color-heading);
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
@@ -382,7 +390,7 @@
   text-transform: uppercase;
 
   color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-heading);
   border: 1px solid rgba(255, 255, 255, 0.1);
 
   cursor: pointer;
@@ -397,15 +405,14 @@
 }
 
 .filter-pill:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--color-heading);
   color: rgba(255, 255, 255, 0.65);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: var(--color-heading);
 }
 
 .filter-pill.active {
-  background: rgba(180, 60, 80, 0.2);
-  border-color: rgba(200, 80, 100, 0.5);
-  color: #f0b0b8;
+  background: var(--color-heading);
+  border: 2px solid rgba(200, 80, 100, 0.5);
 }
 
 .filter-pills-wrapper {
@@ -422,7 +429,7 @@
   height: 28px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--color-heading);
   color: rgba(255, 255, 255, 0.5);
   font-size: 18px;
   line-height: 1;

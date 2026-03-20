@@ -32,6 +32,16 @@ const FILTERS = [
     },
   },
   {
+    name: "Black & White",
+    values: {
+      brightness: 100,
+      contrast: 120,
+      saturate: 0,
+      sepia: 0,
+      hueRotate: 0,
+    },
+  },
+  {
     name: "Bright & Fun",
     values: {
       brightness: 110,
@@ -87,16 +97,6 @@ const FILTERS = [
       brightness: 110,
       contrast: 140,
       saturate: 150,
-      sepia: 0,
-      hueRotate: 0,
-    },
-  },
-  {
-    name: "Black & White",
-    values: {
-      brightness: 100,
-      contrast: 120,
-      saturate: 0,
       sepia: 0,
       hueRotate: 0,
     },

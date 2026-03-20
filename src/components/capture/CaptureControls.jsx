@@ -1,6 +1,7 @@
 import React from "react";
 import TimerOptions from "./TimerOptions";
 import SwitchCameraButton from "./SwitchCameraButton";
+import { Camera, Square } from "lucide-react";
 
 function CaptureControls({
   isDone,
@@ -64,7 +65,11 @@ function CaptureControls({
           isDone || !cameraReady || (selectedTimer !== "auto" && isCounting)
         }
       >
-        <span className="capture-btn-inner" />
+        {selectedTimer === "auto" && isAutoRunning ? (
+          <Square size={18} />
+        ) : (
+          <Camera size={18} />
+        )}
       </button>
 
       {/* Hint */}
