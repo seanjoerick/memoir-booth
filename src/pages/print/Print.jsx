@@ -236,7 +236,6 @@ async function drawColorStrip(photos, bgColor) {
     offscreen.width = innerW;
     offscreen.height = photoH;
     const octx = offscreen.getContext("2d");
-    octx.filter = photos[i].filter || "none";
 
     const srcRatio = img.width / img.height;
     const destRatio = innerW / photoH;
@@ -253,6 +252,7 @@ async function drawColorStrip(photos, bgColor) {
       sy = (img.height - sh) / 2;
     }
     octx.drawImage(img, sx, sy, sw, sh, 0, 0, innerW, photoH);
+    applyFilterManual(octx, innerW, photoH, photos[i].filter); // ← updated
 
     // Rounded corners on photos
     ctx.save();
