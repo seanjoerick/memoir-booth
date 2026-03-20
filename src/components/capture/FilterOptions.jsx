@@ -42,16 +42,6 @@ const FILTERS = [
     },
   },
   {
-    name: "Bright & Fun",
-    values: {
-      brightness: 110,
-      contrast: 115,
-      saturate: 140,
-      sepia: 10,
-      hueRotate: -10,
-    },
-  },
-  {
     name: "Soft Glow",
     values: {
       brightness: 115,
@@ -59,36 +49,6 @@ const FILTERS = [
       saturate: 85,
       sepia: 0,
       hueRotate: 0,
-    },
-  },
-  {
-    name: "Warm Hug",
-    values: {
-      brightness: 105,
-      contrast: 100,
-      saturate: 110,
-      sepia: 25,
-      hueRotate: -10,
-    },
-  },
-  {
-    name: "Cool Breeze",
-    values: {
-      brightness: 100,
-      contrast: 110,
-      saturate: 90,
-      sepia: 0,
-      hueRotate: 180,
-    },
-  },
-  {
-    name: "Retro Fun",
-    values: {
-      brightness: 110,
-      contrast: 105,
-      saturate: 130,
-      sepia: 20,
-      hueRotate: 300,
     },
   },
   {

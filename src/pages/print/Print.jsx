@@ -40,6 +40,76 @@ function loadImage(src) {
   });
 }
 
+function applyFilterManual(ctx, width, height, filterString) {
+  if (!filterString || filterString === "none") return;
+
+  const get = (name) => {
+    const match = filterString.match(new RegExp(`${name}\\(([\\d.]+)(%|deg)?`));
+    if (!match) return null;
+    let val = parseFloat(match[1]);
+    if (match[2] === "%") val = val / 100;
+    return val;
+  };
+
+  const brightness = get("brightness");
+  const contrast = get("contrast");
+  const saturate = get("saturate");
+  const sepia = get("sepia");
+  // hue-rotate — skipped
+
+  const imageData = ctx.getImageData(0, 0, width, height);
+  const data = imageData.data;
+
+  for (let i = 0; i < data.length; i += 4) {
+    let r = data[i],
+      g = data[i + 1],
+      b = data[i + 2];
+
+    if (sepia) {
+      const sr = Math.min(
+        255,
+        r * (1 - 0.607 * sepia) + g * 0.769 * sepia + b * 0.189 * sepia,
+      );
+      const sg = Math.min(
+        255,
+        r * 0.349 * sepia + g * (1 - 0.314 * sepia) + b * 0.168 * sepia,
+      );
+      const sb = Math.min(
+        255,
+        r * 0.272 * sepia + g * 0.534 * sepia + b * (1 - 0.869 * sepia),
+      );
+      r = sr;
+      g = sg;
+      b = sb;
+    }
+
+    if (brightness !== null) {
+      r = Math.min(255, r * brightness);
+      g = Math.min(255, g * brightness);
+      b = Math.min(255, b * brightness);
+    }
+
+    if (contrast !== null) {
+      r = Math.min(255, Math.max(0, (r - 128) * contrast + 128));
+      g = Math.min(255, Math.max(0, (g - 128) * contrast + 128));
+      b = Math.min(255, Math.max(0, (b - 128) * contrast + 128));
+    }
+
+    if (saturate !== null) {
+      const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+      r = Math.min(255, Math.max(0, gray + (r - gray) * saturate));
+      g = Math.min(255, Math.max(0, gray + (g - gray) * saturate));
+      b = Math.min(255, Math.max(0, gray + (b - gray) * saturate));
+    }
+
+    data[i] = r;
+    data[i + 1] = g;
+    data[i + 2] = b;
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+}
+
 /* ── Draw film strip onto a canvas and return dataURL ── */
 async function drawFilmStrip(photos) {
   const photoAreaW = STRIP_WIDTH - SPROCKET_W * 2;
@@ -60,13 +130,6 @@ async function drawFilmStrip(photos) {
     const img = await loadImage(photos[i].dataUrl);
     const y = FILM_TOP_H + i * photoH;
 
-    // Apply filter via offscreen canvas
-    const offscreen = document.createElement("canvas");
-    offscreen.width = photoAreaW;
-    offscreen.height = photoH;
-    const octx = offscreen.getContext("2d");
-    octx.filter = photos[i].filter || "none";
-    // Cover crop: maintain aspect ratio
     const srcRatio = img.width / img.height;
     const destRatio = photoAreaW / photoH;
     let sx, sy, sw, sh;
@@ -81,7 +144,15 @@ async function drawFilmStrip(photos) {
       sx = 0;
       sy = (img.height - sh) / 2;
     }
+
+    // Apply filter via offscreen canvas
+    const offscreen = document.createElement("canvas");
+    offscreen.width = photoAreaW;
+    offscreen.height = photoH;
+    const octx = offscreen.getContext("2d");
     octx.drawImage(img, sx, sy, sw, sh, 0, 0, photoAreaW, photoH);
+
+    applyFilterManual(octx, photoAreaW, photoH, photos[i].filter);
 
     ctx.drawImage(offscreen, SPROCKET_W, y);
 
