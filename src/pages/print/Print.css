@@ -220,7 +220,6 @@
   align-items: center;
   border-radius: 6px;
   overflow: hidden;
-  /* natural width — no scaling, just fixed */
   width: 220px;
   flex-shrink: 0;
 }
@@ -244,6 +243,7 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  border-radius: 2px;
 }
 
 .watermark {
@@ -294,12 +294,16 @@
 }
 
 .film-frame {
-  border-top: 2px solid #111;
+  border-top: 8px solid #1c1c1c;
   position: relative;
 }
 
+.film-frame:last-child {
+  border-bottom: 8px solid #1c1c1c;
+}
+
 .film-frame:first-child {
-  border-top: none;
+  border-top: 8px solid #1c1c1c;
 }
 
 .film-frame::after {
