@@ -16,7 +16,8 @@ function Testimonials() {
           browser?
         </p>
 
-        <div className="testimonials__grid">
+        {/* Add testonials soon */}
+        {/* <div className="testimonials__grid">
           <div className="t-card">
             <ShieldCheck size={24} className="t-icon" />
             <h3>Privacy First</h3>
@@ -34,7 +35,7 @@ function Testimonials() {
             <h3>Mobile Ready</h3>
             <p>Perfect for iPads, Tablets, and any smartphone browsers.</p>
           </div>
-        </div>
+        </div> */}
 
         <div className="beta-status">
           <span className="pulse-dot"></span>
