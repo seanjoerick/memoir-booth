@@ -118,9 +118,10 @@ async function drawFilmStrip(photos) {
   const totalH = FILM_TOP_H + photoH * photos.length + WATERMARK_H;
 
   const canvas = document.createElement("canvas");
-  canvas.width = STRIP_WIDTH;
-  canvas.height = totalH;
+  canvas.width = STRIP_WIDTH * scale;
+  canvas.height = totalH * scale;
   const ctx = canvas.getContext("2d");
+  ctx.scale(scale, scale);
 
   // Background
   ctx.fillStyle = "#1c1c1c";
@@ -146,25 +147,28 @@ async function drawFilmStrip(photos) {
       sy = (img.height - sh) / 2;
     }
 
-    // Apply filter via offscreen canvas
     const offscreen = document.createElement("canvas");
-    offscreen.width = photoAreaW;
-    offscreen.height = photoH;
+    offscreen.width = photoAreaW * scale;
+    offscreen.height = photoH * scale;
     const octx = offscreen.getContext("2d");
+    octx.scale(scale, scale);
     octx.drawImage(img, sx, sy, sw, sh, 0, 0, photoAreaW, photoH);
+    applyFilterManual(
+      octx,
+      photoAreaW * scale,
+      photoH * scale,
+      photos[i].filter,
+    );
 
-    applyFilterManual(octx, photoAreaW, photoH, photos[i].filter);
+    ctx.drawImage(offscreen, SPROCKET_W, y, photoAreaW, photoH);
 
-    ctx.drawImage(offscreen, SPROCKET_W, y);
-
-    // Divider line between photos
     if (i > 0) {
       ctx.fillStyle = "#111";
       ctx.fillRect(SPROCKET_W, y, photoAreaW, 2);
     }
   }
 
-  // Sprocket holes — left & right columns
+  // Sprocket holes
   const holeGap = totalH / (photos.length * 4 + 1);
   for (let col = 0; col < 2; col++) {
     const x =
@@ -174,12 +178,11 @@ async function drawFilmStrip(photos) {
 
     let hy = FILM_TOP_H + holeGap - HOLE_H / 2;
     while (hy + HOLE_H < totalH - WATERMARK_H) {
-      ctx.fillStyle = "#000";
+      ctx.fillStyle = "#ffffff";
       ctx.beginPath();
       ctx.roundRect(x, hy, HOLE_W, HOLE_H, 3);
       ctx.fill();
-      // Hole border
-      ctx.strokeStyle = "#555";
+      ctx.strokeStyle = "#ffffff  ";
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.roundRect(x, hy, HOLE_W, HOLE_H, 3);
@@ -198,10 +201,10 @@ async function drawFilmStrip(photos) {
   ctx.lineTo(STRIP_WIDTH, totalH - WATERMARK_H);
   ctx.stroke();
   ctx.fillStyle = "#555";
-  ctx.font = `${Math.round(WATERMARK_H * 0.45)}px 'Special Elite', serif`;
+  ctx.font = `${Math.round(WATERMARK_H * 0.3)}px 'Poppins', sans-serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.letterSpacing = "0.18em";
+  ctx.letterSpacing = "0";
   ctx.fillText("memoirBooth", STRIP_WIDTH / 2, totalH - WATERMARK_H / 2);
 
   return canvas.toDataURL("image/png", 1.0);
