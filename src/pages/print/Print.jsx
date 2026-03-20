@@ -112,6 +112,7 @@ function applyFilterManual(ctx, width, height, filterString) {
 
 /* ── Draw film strip onto a canvas and return dataURL ── */
 async function drawFilmStrip(photos) {
+  const scale = 3;
   const photoAreaW = STRIP_WIDTH - SPROCKET_W * 2;
   const photoH = Math.round(photoAreaW * (3 / 4));
   const totalH = FILM_TOP_H + photoH * photos.length + WATERMARK_H;
@@ -208,6 +209,7 @@ async function drawFilmStrip(photos) {
 
 /* ── Draw color strip onto a canvas and return dataURL ── */
 async function drawColorStrip(photos, bgColor) {
+  const scale = 3;
   const innerW = STRIP_WIDTH - PADDING * 2;
   const photoH = Math.round(innerW * (3 / 4));
   const gapH = PADDING / 2;
@@ -215,13 +217,14 @@ async function drawColorStrip(photos, bgColor) {
     PADDING +
     photos.length * photoH +
     (photos.length - 1) * gapH +
-    PADDING +
-    WATERMARK_H;
+    WATERMARK_H +
+    24;
 
   const canvas = document.createElement("canvas");
-  canvas.width = STRIP_WIDTH;
-  canvas.height = totalH;
+  canvas.width = STRIP_WIDTH * scale;
+  canvas.height = totalH * scale;
   const ctx = canvas.getContext("2d");
+  ctx.scale(scale, scale);
 
   // Background
   ctx.fillStyle = bgColor;
@@ -233,9 +236,10 @@ async function drawColorStrip(photos, bgColor) {
     const y = PADDING + i * (photoH + gapH);
 
     const offscreen = document.createElement("canvas");
-    offscreen.width = innerW;
-    offscreen.height = photoH;
+    offscreen.width = innerW * scale;
+    offscreen.height = photoH * scale;
     const octx = offscreen.getContext("2d");
+    octx.scale(scale, scale);
 
     const srcRatio = img.width / img.height;
     const destRatio = innerW / photoH;
@@ -252,25 +256,25 @@ async function drawColorStrip(photos, bgColor) {
       sy = (img.height - sh) / 2;
     }
     octx.drawImage(img, sx, sy, sw, sh, 0, 0, innerW, photoH);
-    applyFilterManual(octx, innerW, photoH, photos[i].filter); // ← updated
+    applyFilterManual(octx, innerW * scale, photoH * scale, photos[i].filter);
 
     // Rounded corners on photos
     ctx.save();
     ctx.beginPath();
     ctx.roundRect(PADDING, y, innerW, photoH, 4);
     ctx.clip();
-    ctx.drawImage(offscreen, PADDING, y);
+    ctx.drawImage(offscreen, PADDING, y, innerW, photoH);
     ctx.restore();
   }
 
   // Watermark
   const light = isLightColor(bgColor);
-  ctx.fillStyle = light ? "#555" : "#aaa";
-  ctx.font = `${Math.round(WATERMARK_H * 0.4)}px 'Special Elite', serif`;
+  ctx.fillStyle = light ? "#000000" : "#ffffff";
+  ctx.font = `${Math.round(WATERMARK_H * 0.2)}px 'Poppins', sans-serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.letterSpacing = "0.18em";
-  ctx.fillText("memoirBooth", STRIP_WIDTH / 2, totalH - WATERMARK_H / 2);
+  ctx.letterSpacing = "0";
+  ctx.fillText("memoirBooth", STRIP_WIDTH / 2, totalH - WATERMARK_H / 2 - 24);
 
   return canvas.toDataURL("image/png", 1.0);
 }
