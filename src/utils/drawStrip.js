@@ -11,7 +11,7 @@ import {
 } from "@/constants/stripConstants";
 
 export async function drawFilmStrip(photos) {
-  const GAP = 8;
+  const GAP = 16;
   const scale = 3;
   const photoAreaW = STRIP_WIDTH - SPROCKET_W * 2;
   const photoH = Math.round(photoAreaW * (3 / 4));
@@ -64,7 +64,12 @@ export async function drawFilmStrip(photos) {
       photos[i].filter,
     );
 
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(SPROCKET_W, y, photoAreaW, photoH, 4);
+    ctx.clip();
     ctx.drawImage(offscreen, SPROCKET_W, y, photoAreaW, photoH);
+    ctx.restore();
   }
 
   // Sprocket holes
