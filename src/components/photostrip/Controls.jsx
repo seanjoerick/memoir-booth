@@ -22,6 +22,7 @@ function Controls({
 }) {
   return (
     <>
+      {/* Tabs */}
       <div className="ctrl-tabs">
         <button
           className={`tab-btn ${stripType === "film" ? "tab-active" : ""}`}
@@ -37,45 +38,57 @@ function Controls({
         </button>
       </div>
 
+      {/* Only show for color strip */}
       {stripType === "color" && (
-        <div className="ctrl-group">
-          <span className="ctrl-label">Background</span>
-          <div className="color-swatches">
-            {BG_COLORS.map((c) => (
-              <button
-                key={c.value}
-                className={`swatch ${activeBg === c.value ? "swatch-active" : ""}`}
-                style={{ backgroundColor: c.value }}
-                title={c.label}
-                onClick={() => handlePreset(c.value)}
-              />
-            ))}
-            <label
-              className={`swatch swatch-custom ${activeBg === "custom" ? "swatch-active" : ""}`}
-              title="Custom color"
-            >
-              <span className="swatch-plus">+</span>
-              <input
-                type="color"
-                value={customColor}
-                onChange={handleCustom}
-                className="hidden-color-input"
-              />
-            </label>
+        <>
+          {/* Background Picker */}
+          <div className="ctrl-group">
+            <span className="ctrl-label">Background</span>
+            <div className="color-swatches">
+              {BG_COLORS.map((c) => (
+                <button
+                  key={c.value}
+                  className={`swatch ${
+                    activeBg === c.value ? "swatch-active" : ""
+                  }`}
+                  style={{ backgroundColor: c.value }}
+                  title={c.label}
+                  onClick={() => handlePreset(c.value)}
+                />
+              ))}
+
+              {/* Custom Color */}
+              <label
+                className={`swatch swatch-custom ${
+                  activeBg === "custom" ? "swatch-active" : ""
+                }`}
+                title="Custom color"
+              >
+                <span className="swatch-plus">+</span>
+                <input
+                  type="color"
+                  value={customColor}
+                  onChange={handleCustom}
+                  className="hidden-color-input"
+                />
+              </label>
+            </div>
           </div>
-        </div>
+
+          {/* Sticker Button */}
+          <button
+            className="sticker-soon-btn"
+            disabled
+            title="Sticker feature coming soon!"
+          >
+            <Sparkles size={15} className="sticker-icon" />
+            Sticker Burst
+            <span className="sticker-soon-badge">Soon</span>
+          </button>
+        </>
       )}
 
-      <button
-        className="sticker-soon-btn"
-        disabled
-        title="Sticker feature coming soon!"
-      >
-        <Sparkles size={15} className="sticker-icon" />
-        Sticker Burst
-        <span className="sticker-soon-badge">Soon</span>
-      </button>
-
+      {/* Save Button */}
       <button className="save-btn" onClick={handleSave} disabled={saving}>
         {saving ? "Saving..." : "Save Image"}
       </button>
