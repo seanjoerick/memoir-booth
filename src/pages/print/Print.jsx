@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { usePhoto } from "@/context/usePhoto";
 import { drawFilmStrip, drawColorStrip } from "@/utils/drawStrip";
 import Controls from "@/components/photostrip/Controls";
-import FilmStrip from "@/components/photostrip/Filmstrip";
+import FilmStrip from "@/components/photostrip/FilmStrip";
 import ColorStrip from "@/components/photostrip/ColorStrip";
 import { saveImage } from "@/utils/imageUtils";
 import "./Print.css";
