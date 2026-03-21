@@ -353,10 +353,8 @@
   padding: 0.5rem 0.5rem 0.75rem;
 }
 
-/* =========================================================
-   MOBILE — ≤ 640px
-   ========================================================= */
-@media (max-width: 640px) {
+/* MOBILE + SMALL TABLET — ≤ 800px */
+@media (max-width: 800px) {
   .ps-page {
     flex-direction: column;
     overflow: auto;
@@ -369,7 +367,7 @@
     display: none;
   }
 
-  /* Show mobile top controls bar */
+  /* Show top controls bar */
   .ps-topbar {
     display: flex;
     flex-direction: column;
@@ -382,17 +380,17 @@
     z-index: 10;
   }
 
-  /* On mobile, tabs go horizontal */
+  /* Tabs horizontal */
   .ps-topbar .ctrl-tabs {
     flex-direction: row;
   }
 
-  /* Save btn in topbar — hide it, use the bottom bar instead */
+  /* Hide topbar save button, use bottom bar */
   .ps-topbar .save-btn {
     display: none;
   }
 
-  /* Preview: scrollable, auto height */
+  /* Preview adjustments */
   .ps-preview {
     min-height: unset;
     flex: unset;
@@ -400,9 +398,14 @@
     overflow-y: visible;
   }
 
-  /* Strip a bit narrower on mobile */
   .strip {
     width: 180px;
+  }
+
+  @media (min-width: 641px) {
+    .strip {
+      width: 200px;
+    }
   }
 
   /* Sticky bottom save bar */
