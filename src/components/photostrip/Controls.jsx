@@ -1,3 +1,5 @@
+import { Sparkles } from "lucide-react";
+
 const BG_COLORS = [
   { label: "White", value: "#ffffff" },
   { label: "Black", value: "#111111" },
@@ -63,6 +65,16 @@ function Controls({
           </div>
         </div>
       )}
+
+      <button
+        className="sticker-soon-btn"
+        disabled
+        title="Sticker feature coming soon!"
+      >
+        <Sparkles size={15} className="sticker-icon" />
+        Sticker Burst
+        <span className="sticker-soon-badge">Soon</span>
+      </button>
 
       <button className="save-btn" onClick={handleSave} disabled={saving}>
         {saving ? "Saving..." : "Save Image"}
