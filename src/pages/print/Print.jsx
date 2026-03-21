@@ -39,15 +39,21 @@ export default function PhotoStripPage() {
   const handleSave = async () => {
     if (saving) return;
     setSaving(true);
+
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const win = isIOS ? window.open("", "_blank") : null;
+
     try {
       const dataUrl =
         stripType === "film"
           ? await drawFilmStrip(displayPhotos)
           : await drawColorStrip(displayPhotos, selectedBg);
 
-      saveImage(dataUrl, `memoirBooth-${stripType}-strip.png`);
+      saveImage(dataUrl, `memoirBooth-${stripType}-strip.png`, win);
     } catch (err) {
       console.error("Save failed:", err);
+      win?.close();
     } finally {
       setSaving(false);
     }

@@ -89,12 +89,11 @@ export function applyFilterManual(ctx, width, height, filterString) {
 }
 
 /* ── Trigger download / save (cross-platform) ── */
-export function saveImage(dataUrl, filename) {
+export function saveImage(dataUrl, filename, win = null) {
   const isIOS =
     /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-  if (isIOS) {
-    const win = window.open("", "_blank");
+  if (isIOS && win) {
     win.document.write(`
       <!DOCTYPE html>
       <html>
