@@ -1,3 +1,4 @@
+# https://memoir-booth.pages.dev/
 # memoir booth
 A cute pastel-themed photobooth web app where you can snap photos, add filters, decorate with stickers, and print adorable photo strips.
 ## features
